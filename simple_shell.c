@@ -8,10 +8,12 @@
 #include <unistd.h>
 /**
  * main - a custom shell
+ * @argc: number of arguments
+ * @argv: list of arguments
  *
  * Return: always 0
  */
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	char *buf, *argument[] = {"", NULL}, *buf2;
 	pid_t proc;
@@ -27,7 +29,7 @@ int main(int argc, char** argv)
 		perror("fork error");
 		return (1);
 	}
-	if(proc == 0)
+	if (proc == 0)
 	{
 		write(1, "#cisfun$ ", 9);
 		read(0, buf, 25);
