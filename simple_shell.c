@@ -8,13 +8,11 @@
 #include <unistd.h>
 #include <string.h>
 /**
- * simple - a custom shell
- * @argc: number of arguments
- * @argv: list of arguments
+ * simple_shell - a custom shell
  *
  * Return: 0 if success, otherwise -1
  */
-int simple_shell()
+int simple_shell(void)
 {
 	char *buf, *argument[] = {"", NULL}, *buf2;
 	pid_t proc;
@@ -54,6 +52,10 @@ int simple_shell()
 	}
 	return (0);
 }
+/**
+ * simple_shell2 - a custom shell
+ * @str: a string
+ */
 void simple_shell2(char *str)
 {
 	char *argument[] = {"", NULL};
