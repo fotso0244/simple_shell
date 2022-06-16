@@ -30,13 +30,13 @@ void simple_shell(void)
 	signal(SIGINT, signalhandler);
 	while (1)
 	{
-		if (buf != NULL)
-			free(buf);
 		buf = malloc(sizeof(*buf) * 25);
 		if (buf == NULL)
+		{
 			perror("Malloc error");
+			exit(1);
+		}
 		write(1, "#cisfun$ ", 9);
-		proc1 = fork();
 		while (c != '\n')
 		{
 			read(0, &c, 1);
@@ -47,7 +47,10 @@ void simple_shell(void)
 		}
 		proc1 = fork();
 		if (proc1 == -1)
+		{
 			perror("fork error");
+			exit(1);
+		}
 		if (proc1 == 0)
 		{
 			execve(buf, argument, 0);
@@ -56,6 +59,7 @@ void simple_shell(void)
 		else
 		{
 			wait(NULL);
+			free(buf);
 		}
 	}
 }
