@@ -13,12 +13,12 @@
  * @signum: a signal
  */
 void signalhandler(int signum)
-{printf("toto = %d\n",signum);
-	
+{
+	write(1, "\n", 1);
+	exit(signum);	
 }
 /**
  * simple_shell - a custom shell
- *
  */
 void simple_shell(void)
 {
@@ -54,11 +54,15 @@ void simple_shell(void)
 		if (proc1 == 0)
 		{
 			execve(buf, argument, 0);
+			c = 'a';
+			i = 0;
 			write(1,"./shell: No such file or directory\n", 35);
 		}
 		else
 		{
 			wait(NULL);
+			c = 'a';
+			i = 0;
 			free(buf);
 		}
 	}
