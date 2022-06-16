@@ -24,8 +24,8 @@ void simple_shell(void)
 {
 	char *buf, *argument[] = {"", NULL};
 	pid_t proc1;
-	int i = 0;
-	char c;
+	int i = 0, c = 1;
+	char d;
 	
 	signal(SIGINT, signalhandler);
 	while (1)
@@ -37,12 +37,12 @@ void simple_shell(void)
 			exit(1);
 		}
 		write(1, "#cisfun$ ", 9);
-		while (c != '\n')
+		while (c != 0)
 		{
-			read(0, &c, 1);
-			if (c == '\n')
+			c = read(0, &d, 1);
+			if (c == 0)
 				break;
-			buf[i] = c;
+			buf[i] = d;
 			i++;
 		}
 		proc1 = fork();
@@ -53,15 +53,16 @@ void simple_shell(void)
 		}
 		if (proc1 == 0)
 		{
+			write(1, "\n", 1);
 			execve(buf, argument, 0);
-			c = 'a';
+			c = 1;
 			i = 0;
 			write(1,"./shell: No such file or directory\n", 35);
 		}
 		else
 		{
 			wait(NULL);
-			c = 'a';
+			c = 1;
 			i = 0;
 			free(buf);
 		}
