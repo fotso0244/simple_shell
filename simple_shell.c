@@ -97,7 +97,6 @@ void simple_shell2(char *str2, char *str)
 	char *argument[] = {"", NULL};
 	int count;
 
-	/*write(1, "#cisfun$ ", 9);*/
 	execve(str, argument, NULL);
 	count = nbchar(str2);
 	write(2, str2, count);
@@ -160,4 +159,5 @@ void simple_shell3(char *str)
 			j = 0;
 		}
 	}
+	free(str2);
 }
