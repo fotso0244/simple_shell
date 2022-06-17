@@ -77,6 +77,7 @@ void simple_shell(char *str)
 			count = nbchar(str);
 			write(2, str, count);
 			write(2,": No such file or directory\n", 28);
+			exit(1);
 		}
 		else
 		{
