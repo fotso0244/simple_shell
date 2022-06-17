@@ -16,11 +16,9 @@
  */
 int nbchar(char *str)
 {
-	char *s;
 	int i = 0;
 
-	s = str;
-	while (s[i] != '\0')
+	while (str[i] != '\0')
 	{
 		i++;
 	}
@@ -111,10 +109,17 @@ void simple_shell2(char *str2, char *str)
  */
 void simple_shell3(char *str)
 {
-	char str2[50], *token;
+	char *str2, *token;
 	char d;
-	int c = 1, i = 0;
+	int c = 1, i = 0, j = 0;
+	pid_t proc;
 
+	str2 = malloc(sizeof(*str2) * 50);
+	if (str2 == NULL)
+	{
+		perror("malloc error");
+		exit(1);
+	}
 	while (c != 0)
 	{
 		c = read(0, &d, 1);
@@ -124,14 +129,35 @@ void simple_shell3(char *str)
 		i++;
 	}
 	write(1, "#cisfun$ ", 9);
-	token = strtok(str2, "\n");
-	while (token != NULL)
+	i = 0;
+	while (str2[i] != '\0')
 	{
-		printf("token = %s\n", token);
-		simple_shell2(str, token);
-		token = strtok(NULL, "\n");
-		if (token != NULL)
-			write(1, "\n#cisfun$ ", 10);
+		token = malloc(sizeof(*token) * nbchar(str2));
+		while (str2[i] != '\n')
+		{
+			token[j] = str2[i];
+			i++;
+			j++;
+		}
+		token[j] = '\0';
+		proc = fork();
+		if (proc == -1)
+		{
+			perror("fork error");
+			exit(1);
+		}
+		if (proc == 0)
+		{
+			simple_shell2(str, token);
+			exit(1);
+		}
+		else
+		{
+			wait(NULL);
+			free(token);
+			i++;
+			write(1, "#cisfun$ ", 9);
+			j = 0;
+		}
 	}
-	write(1, "#cisfun$ ", 9);
 }
