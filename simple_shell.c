@@ -9,6 +9,23 @@
 #include <string.h>
 #include <signal.h>
 /**
+ * nbcar - number of character
+ * @str: a string
+ *
+ * Return: a number of character
+ */
+int nbcar(char *str)
+{
+	char *s;
+	int i = 0;
+	while (s != NULL)
+	{
+		i++;
+		s++;
+	}
+	return (i);
+}
+/**
  * signalhandler - handler of a signal
  * @signum: a signal
  */
@@ -19,12 +36,13 @@ void signalhandler(int signum)
 }
 /**
  * simple_shell - a custom shell
+ * str: name of binary file
  */
-void simple_shell(void)
+void simple_shell(char *str)
 {
 	char *buf, *argument[] = {"", NULL};
 	pid_t proc1;
-	int i = 0, c = 1;
+	int i = 0, c = 1, count;
 	char d;
 	
 	signal(SIGINT, signalhandler);
@@ -56,8 +74,9 @@ void simple_shell(void)
 			write(1, "\n", 1);
 			execve(buf, argument, 0);
 			c = 1;
-			i = 0;
-			write(2,"./hsh: No such file or directory\n", 33);
+			i = 0, count = nbchar(str);
+			write(2, str, count);
+			write(2,": No such file or directory\n", 28);
 		}
 		else
 		{
@@ -71,11 +90,13 @@ void simple_shell(void)
 /**
  * simple_shell2 - a custom shell
  * @str: a string
+ * @str2: name of binary file
  */
-void simple_shell2(char *str)
+void simple_shell2(char *str2, char *str)
 {
 	char *argument[] = {"", NULL};
 	pid_t proc;
+	int count;
 
 	write(1, "#cisfun$ ", 9);
 	proc = fork();
@@ -87,7 +108,8 @@ void simple_shell2(char *str)
 	if (proc == 0)
 	{
 		execve(str, argument, NULL);
-		write(2, "./hsh", 5);
+		count = nbcar(str2);
+		write(2, str2, count);
 		write(2, ": No such file or directory\n", 28);
 		kill(getpid(), SIGTERM);
 	}
