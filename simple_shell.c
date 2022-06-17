@@ -14,14 +14,15 @@
  *
  * Return: a number of character
  */
-int nbcar(char *str)
+int nbchar(char *str)
 {
 	char *s;
 	int i = 0;
-	while (s != NULL)
+
+	s = str;
+	while (s[i] != '\0')
 	{
 		i++;
-		s++;
 	}
 	return (i);
 }
@@ -74,7 +75,8 @@ void simple_shell(char *str)
 			write(1, "\n", 1);
 			execve(buf, argument, 0);
 			c = 1;
-			i = 0, count = nbchar(str);
+			i = 0;
+			count = nbchar(str);
 			write(2, str, count);
 			write(2,": No such file or directory\n", 28);
 		}
@@ -95,9 +97,39 @@ void simple_shell(char *str)
 void simple_shell2(char *str2, char *str)
 {
 	char *argument[] = {"", NULL};
-	pid_t proc;
 	int count;
 
+	/*write(1, "#cisfun$ ", 9);*/
+	execve(str, argument, NULL);
+	count = nbchar(str2);
+	write(2, str2, count);
+	write(2, ": No such file or directory\n", 28);
+}
+/**
+ * simple_shell3 - a non-interactive shell
+ * @str: name of program
+ */
+void simple_shell3(char *str)
+{
+	char *str2, *token;
+	char d;
+	int c = 1, i = 0;
+	pid_t proc;
+
+	str2 = malloc(sizeof(*str2) * 25);
+	if (str2 == NULL)
+	{
+		perror("malloc error");
+		exit(1);
+	}
+	while (c != 0)
+	{
+		c = read(0, &d, 1);
+		if (c == 0)
+			break;
+		str2[i] = d;
+		i++;
+	}
 	write(1, "#cisfun$ ", 9);
 	proc = fork();
 	if (proc == -1)
@@ -107,11 +139,16 @@ void simple_shell2(char *str2, char *str)
 	}
 	if (proc == 0)
 	{
-		execve(str, argument, NULL);
-		count = nbcar(str2);
-		write(2, str2, count);
-		write(2, ": No such file or directory\n", 28);
-		kill(getpid(), SIGTERM);
+		token = strtok(str2, "\n");
+		while (token != NULL)
+		{
+			printf("token = %s\n", token);
+			simple_shell2(str, token);
+			token = strtok(NULL, "\n");
+			if (token != NULL)
+				write(1, "\n#cisfun$ ", 10);
+		}
+		exit(1);
 	}
 	else
 	{

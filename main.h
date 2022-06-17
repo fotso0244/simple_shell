@@ -1,5 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
-int simple_shell(void);
-void simple_shell2(char *str);
+void simple_shell(char *);
+void simple_shell2(char *, char *);
+void simple_shell3(char *str);
 #endif
