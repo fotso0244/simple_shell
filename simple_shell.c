@@ -57,7 +57,7 @@ void simple_shell(void)
 			execve(buf, argument, 0);
 			c = 1;
 			i = 0;
-			write(1,"./shell: No such file or directory\n", 35);
+			write(2,"./shell: No such file or directory\n", 35);
 		}
 		else
 		{
@@ -75,8 +75,25 @@ void simple_shell(void)
 void simple_shell2(char *str)
 {
 	char *argument[] = {"", NULL};
+	pid_t proc;
 
-	execve(str, argument, NULL);
-	write(2, "./shell", 7);
-	write(2, ": No such file or directory\n", 28);
+	write(1, "#cisfun$ ", 9);
+	proc = fork();
+	if (proc == -1)
+	{
+		perror("fork error");
+		exit(1);
+	}
+	if (proc == 0)
+	{
+		execve(str, argument, NULL);
+		write(2, "./shell", 7);
+		write(2, ": No such file or directory\n", 28);
+		kill(getpid(), SIGTERM);
+	}
+	else
+	{
+		wait(NULL);
+		write(1, "#cisfun$ ", 9);
+	}
 }
