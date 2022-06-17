@@ -40,7 +40,7 @@ void simple_shell(void)
 		while (c != 0)
 		{
 			c = read(0, &d, 1);
-			if (c == 0)
+			if (c == 0 || c == -1)
 				break;
 			buf[i] = d;
 			i++;
