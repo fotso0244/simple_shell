@@ -57,7 +57,7 @@ void simple_shell(void)
 			execve(buf, argument, 0);
 			c = 1;
 			i = 0;
-			write(2,"./shell: No such file or directory\n", 35);
+			write(2,"./hsh: No such file or directory\n", 33);
 		}
 		else
 		{
@@ -87,7 +87,7 @@ void simple_shell2(char *str)
 	if (proc == 0)
 	{
 		execve(str, argument, NULL);
-		write(2, "./shell", 7);
+		write(2, "./hsh", 5);
 		write(2, ": No such file or directory\n", 28);
 		kill(getpid(), SIGTERM);
 	}
