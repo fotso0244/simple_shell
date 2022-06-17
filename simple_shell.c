@@ -142,7 +142,6 @@ void simple_shell3(char *str)
 		token = strtok(str2, "\n");
 		while (token != NULL)
 		{
-			printf("token = %s\n", token);
 			simple_shell2(str, token);
 			token = strtok(NULL, "\n");
 			if (token != NULL)
