@@ -136,7 +136,7 @@ void simple_shell3(char *str)
 	while (str2[i] != '\0')
 	{
 		token = malloc(sizeof(*token) * nbchar(str2));
-		while (str2[i] != '\n' && str2[i] != ' ')
+		while (str2[i] != '\n' && (str2[i] != ' ' || str2[i + 1] != ' '))
 		{
 			token[j] = str2[i];
 			i++;
