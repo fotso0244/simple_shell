@@ -95,10 +95,13 @@ void simple_shell(char *str)
  */
 void simple_shell2(char *str2, char *str)
 {
-	char *argument[] = {"", NULL};
+	char *argument[] = {"sh"};
 	int count;
 
-	execve(str, argument, NULL);
+	argument[1] = "-c";
+	argument[2] = str;
+	argument[3] = NULL;
+	execve("/bin/sh", argument, NULL);
 	count = nbchar(str2);
 	write(2, str2, count);
 	write(2, ": No such file or directory\n", 28);
