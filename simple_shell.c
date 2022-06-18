@@ -98,13 +98,13 @@ void simple_shell(char *str)
  */
 void simple_shell2(char *str2, char *str)
 {
-	char *argument[] = {"sh"}, *env[] = {"PATH=/bin", NULL};
+	char *argument[] = {"sh"}; /**env[] = {"PATH=/bin", NULL};*/
 	int count;
 
 	argument[1] = "-c";
 	argument[2] = str;
 	argument[3] = NULL;
-	execve("/bin/sh", argument, env);
+	execve("/bin/sh", argument, NULL);
 	count = nbchar(str2);
 	write(2, str2, count);
 	write(2, ": No such file or directory\n", 28);
@@ -144,9 +144,14 @@ void simple_shell3(char *str)
 		token = malloc(sizeof(*token) * nbchar(str2));
 		while (str2[i] != '\n' && (str2[i] != ' ' || str2[i + 1] != ' '))
 		{
-			token[j] = str2[i];
-			i++;
-			j++;
+			if (str2[i] != ' ' || str2[i + 1] != ' ')
+			{
+				token[j] = str2[i];
+				i++;
+				j++;
+			}
+			else
+				i++;
 		}
 		if (j != 0)
 		{
