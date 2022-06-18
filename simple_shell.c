@@ -17,10 +17,13 @@
 int nbchar(char *str)
 {
 	int i = 0;
+	char c = '\0';
 
-	while (str[i] != '\0')
+	c = str[i];
+	while (c != '\0')
 	{
 		i++;
+		c = str[i];
 	}
 	return (i);
 }
@@ -112,7 +115,7 @@ void simple_shell2(char *str2, char *str)
  */
 void simple_shell3(char *str)
 {
-	char *str2, *token;
+	char *str2 = NULL, *token;
 	char d;
 	int c = 1, i = 0, j = 0;
 	pid_t proc;
@@ -165,7 +168,10 @@ void simple_shell3(char *str)
 			}
 		}
 		else
+		{
+			free(token);
 			i++;
+		}
 	}
 	free(str2);
 }
