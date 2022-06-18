@@ -128,7 +128,6 @@ void simple_shell3(char *str)
 		str2[i] = d;
 		i++;
 	}
-	write(1, "#cisfun$ ", 9);
 	i = 0;
 	while (str2[i] != '\0')
 	{
@@ -156,7 +155,6 @@ void simple_shell3(char *str)
 			wait(NULL);
 			free(token);
 			i++;
-			write(1, "#cisfun$ ", 9);
 			j = 0;
 		}
 	}
