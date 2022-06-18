@@ -121,6 +121,9 @@ void simple_shell3(char *str)
 	pid_t proc;
 
 	str2 = malloc(sizeof(*str2) * 50);
+	for (i = 0; i < 50; i++)
+		str2[i] = '\0';
+	i = 0;
 	if (str2 == NULL)
 	{
 		perror("malloc error");
