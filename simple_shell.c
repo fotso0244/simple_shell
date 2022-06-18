@@ -42,12 +42,14 @@ void signalhandler(int signum)
  */
 void simple_shell(char *str)
 {
-	char *buf, *argument[] = {"", NULL};
+	char *buf, *argument[] = {"", NULL}, *env[] = {NULL};
 	pid_t proc1;
 	int i = 0, c = 1, count;
 	char d;
 	
 	signal(SIGINT, signalhandler);
+	env[0] = getenv("PATH");
+	env[1] = NULL;printf("%s\n", env[0]);
 	while (1)
 	{
 		buf = malloc(sizeof(*buf) * 25);
@@ -74,7 +76,7 @@ void simple_shell(char *str)
 		if (proc1 == 0)
 		{
 			write(1, "\n", 1);
-			execve(buf, argument, 0);
+			execve(buf, argument, NULL);
 			c = 1;
 			i = 0;
 			count = nbchar(str);
@@ -98,13 +100,17 @@ void simple_shell(char *str)
  */
 void simple_shell2(char *str2, char *str)
 {
-	char *argument[] = {"sh"}; /**env[] = {"PATH=/bin", NULL};*/
-	int count;
+	char *argument[] = {"sh"}, *env[] = {"der", NULL};
+	int count;char c[150] = "PATH=";
 
 	argument[1] = "-c";
 	argument[2] = str;
 	argument[3] = NULL;
-	execve("/bin/sh", argument, NULL);
+	env[0] = getenv("PATH");
+	strcat(c, env[0]);
+	env[0] = c;
+	env[1] = NULL;
+	execve("/bin/sh", argument, env);
 	count = nbchar(str2);
 	write(2, str2, count);
 	write(2, ": No such file or directory\n", 28);
@@ -142,7 +148,7 @@ void simple_shell3(char *str)
 	while (str2[i] != '\0')
 	{
 		token = malloc(sizeof(*token) * nbchar(str2));
-		while (str2[i] != '\n' && (str2[i] != ' ' || str2[i + 1] != ' '))
+		while (str2[i] != '\n')
 		{
 			if (str2[i] != ' ' || str2[i + 1] != ' ')
 			{
