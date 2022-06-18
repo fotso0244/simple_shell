@@ -139,25 +139,30 @@ void simple_shell3(char *str)
 			i++;
 			j++;
 		}
-		token[j] = '\0';
-		proc = fork();
-		if (proc == -1)
+		if (j != 0)
 		{
-			perror("fork error");
-			exit(1);
-		}
-		if (proc == 0)
-		{
-			simple_shell2(str, token);
-			exit(1);
+			token[j] = '\0';
+			proc = fork();
+			if (proc == -1)
+			{
+				perror("fork error");
+				exit(1);
+			}
+			if (proc == 0)
+			{
+				simple_shell2(str, token);
+				exit(1);
+			}
+			else
+			{
+				wait(NULL);
+				free(token);
+				i++;
+				j = 0;
+			}
 		}
 		else
-		{
-			wait(NULL);
-			free(token);
 			i++;
-			j = 0;
-		}
 	}
 	free(str2);
 }
