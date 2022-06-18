@@ -128,6 +128,7 @@ void simple_shell3(char *str)
 		str2[i] = d;
 		i++;
 	}
+	str2[i + 1] = '\0';
 	i = 0;
 	while (str2[i] != '\0')
 	{
