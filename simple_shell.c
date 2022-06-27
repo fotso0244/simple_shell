@@ -147,8 +147,9 @@ int If_cmd_exist(char *cmd)
 	path[nbchar(path)] = '\0';
 	token3 = path;
 	token2 = malloc(sizeof(*token2) * 20);
+	token1 = malloc(sizeof(*token1) * 10);
 	_strtok(token2, token3, ':');
-	token1 = strtok(cmd, " ");
+	_strtok(token1, cmd, ' ');
 	while(token2 != NULL)
 	{
 		strcat(token2, "/");
@@ -156,9 +157,13 @@ int If_cmd_exist(char *cmd)
 		if (stat(token2, &stats) == -1)
 		{
 			res = 0;
-			token3 += (nbchar(token2) - nbchar(cmd));
+			token3 += (nbchar(token2) - nbchar(token1));
 			if (token3[0] == 'P')
+			{
+				free(token1);
+				free(token2);
 				return (0);
+			}
 			free(token2);
 			token2= malloc(sizeof(*token2) * 20);
 			_strtok(token2, token3, ':');
@@ -166,6 +171,8 @@ int If_cmd_exist(char *cmd)
 		else
 		{
 			res = 1;
+			free(token2);
+			free(token1);
 			return (1);
 		}
 	}
