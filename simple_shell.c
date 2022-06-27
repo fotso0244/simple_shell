@@ -115,6 +115,23 @@ void simple_shell2(char *str2, char *str)
 	write(2, str2, count);
 	write(2, ": No such file or directory\n", 28);
 }
+void _strtok(char *token, char *str, char delim)
+{
+	int i = 0;
+
+	while (str[i] != delim && str[i] != '\0' && str != NULL)
+	{
+		token[i] = str[i];
+		i++;
+	}
+	if (i == 0)
+	{
+		free(token);
+		token = NULL;
+	}
+	else
+		token[i] = '\0';
+}
 /**
  * If_cmd_exist - checks if command exist in PATH
  * @cmd: a command
@@ -123,11 +140,14 @@ void simple_shell2(char *str2, char *str)
  */
 int If_cmd_exist(char *cmd)
 {
-	char *path = getenv("PATH"), *token1, *token2;
+	char *path = getenv("PATH"), *token1, *token3, *token2;
 	struct stat stats;
-	int res;
+	int res = 0;
 
-	token2 = strtok(path, ":");
+	path[nbchar(path)] = '\0';
+	token3 = path;
+	token2 = malloc(sizeof(*token2) * 20);
+	_strtok(token2, token3, ':');
 	token1 = strtok(cmd, " ");
 	while(token2 != NULL)
 	{
@@ -136,12 +156,17 @@ int If_cmd_exist(char *cmd)
 		if (stat(token2, &stats) == -1)
 		{
 			res = 0;
-			token2 = strtok(NULL, ":");
+			token3 += (nbchar(token2) - nbchar(cmd));
+			if (token3[0] == 'P')
+				return (0);
+			free(token2);
+			token2= malloc(sizeof(*token2) * 20);
+			_strtok(token2, token3, ':');
 		}
 		else
 		{
 			res = 1;
-			exit(1);
+			return (1);
 		}
 	}
 	return (res);
@@ -193,7 +218,7 @@ void simple_shell3(char *str)
 		if (j != 0)
 		{
 			token[j] = '\0';
-			if (If_cmd_exist(token))
+			if (If_cmd_exist(token) == 1)
 			{
 				proc = fork();
 				if (proc == -1)
