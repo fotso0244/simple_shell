@@ -116,6 +116,37 @@ void simple_shell2(char *str2, char *str)
 	write(2, ": No such file or directory\n", 28);
 }
 /**
+ * If_cmd_exist - checks if command exist in PATH
+ * @cmd: a command
+ *
+ * Return: 1 if command exist, otherwise 0
+ */
+int If_cmd_exist(char *cmd)
+{
+	char *path = getenv("PATH"), *token1, *token2;
+	struct stat stats;
+	int res;
+
+	token2 = strtok(path, ":");
+	token1 = strtok(cmd, " ");
+	while(token2 != NULL)
+	{
+		strcat(token2, "/");
+		strcat(token2, token1);
+		if (stat(token2, &stats) == -1)
+		{
+			res = 0;
+			token2 = strtok(NULL, ":");
+		}
+		else
+		{
+			res = 1;
+			exit(1);
+		}
+	}
+	return (res);
+}
+/**
  * simple_shell3 - a non-interactive shell
  * @str: name of program
  */
@@ -162,24 +193,35 @@ void simple_shell3(char *str)
 		if (j != 0)
 		{
 			token[j] = '\0';
-			proc = fork();
-			if (proc == -1)
+			if (If_cmd_exist(token))
 			{
-				perror("fork error");
-				exit(1);
-			}
-			if (proc == 0)
-			{
-				simple_shell2(str, token);
-				exit(1);
+				proc = fork();
+				if (proc == -1)
+				{
+					perror("fork error");
+					exit(1);
+				}
+				if (proc == 0)
+				{
+					simple_shell2(str, token);
+					exit(1);
+				}
+				else
+				{
+					wait(NULL);
+					free(token);
+					i++;
+					j = 0;
+				}
 			}
 			else
 			{
-				wait(NULL);
-				free(token);
-				i++;
-				j = 0;
-			}
+				write(1, "./hsh: 1:", 10);
+			       write(1, token, nbchar(token));
+			       write(1, ": not found\n", 12);
+			       free(token);
+			       i++;
+			}	       
 		}
 		else
 		{
