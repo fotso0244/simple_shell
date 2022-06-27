@@ -251,9 +251,9 @@ process:
 			}
 			else
 			{
-				write(1, "./hsh: 1:", 10);
-			       write(1, token, nbchar(token));
-			       write(1, ": not found\n", 12);
+				write(2, "./hsh: 1:", 10);
+			       write(2, token, nbchar(token));
+			       write(2, ": not found\n", 12);
 			       free(token);
 			       i++;
 			}	       
