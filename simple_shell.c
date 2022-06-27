@@ -100,17 +100,17 @@ void simple_shell(char *str)
  */
 void simple_shell2(char *str2, char *str)
 {
-	char *argument[] = {"sh"}, *env[] = {"der", NULL};
-	int count;char c[150] = "PATH=";
+	char *argument[] = {"sh"};/**env[] = {"der", NULL};*/
+	int count;/*char c[150] = "PATH=";*/
 
 	argument[1] = "-c";
 	argument[2] = str;
 	argument[3] = NULL;
-	env[0] = getenv("PATH");
+	/*env[0] = getenv("PATH");
 	strcat(c, env[0]);
 	env[0] = c;
-	env[1] = NULL;
-	execve("/bin/sh", argument, env);
+	env[1] = NULL;*/
+	execve("/bin/sh", argument, 0);
 	count = nbchar(str2);
 	write(2, str2, count);
 	write(2, ": No such file or directory\n", 28);
