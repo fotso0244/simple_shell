@@ -225,8 +225,11 @@ void simple_shell3(char *str)
 		if (j != 0)
 		{
 			token[j] = '\0';
+			if ((token[0] == '.' && token[1] == '/') || token[0] == '/')
+				goto process;
 			if (If_cmd_exist(token) == 1)
 			{
+process:
 				proc = fork();
 				if (proc == -1)
 				{
