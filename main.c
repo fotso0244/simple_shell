@@ -27,6 +27,7 @@ int main(int argc, char **argv, char *envp[])
 	if (status == 6 || status == 134)
 	{
 		status = 0;
+		exit(0);
 	}
 	return (status);
 }
