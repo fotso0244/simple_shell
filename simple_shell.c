@@ -103,11 +103,12 @@ void simple_shell(char *str)
 void _strtok(char *token, char *str, char delim);
 int simple_shell2(char *str2, char *str, char **envp)
 {
-	char *argument[] = {"sh"}, *token;/**env[] = {"der", NULL};*/
-	int count, i, cmp = 0;/*char c[150] = "PATH=";*/
+	char *cpy, *argument[] = {"sh"}, *token;/**env[] = {"der", NULL};*/
+	int count, ;/*char c[150] = "PATH=";*/
 
-	cmp = strcmp(str, "env");
-	if (cmp != 0)
+	cpy = malloc(sizeof(*cpy) * 20);
+	strcpy(cpy, str);
+	if (strcmp(cpy, "env") != 0)
 	{
 		argument[1] = "-c";
 		argument[2] = str;
