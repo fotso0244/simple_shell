@@ -104,7 +104,7 @@ void _strtok(char *token, char *str, char delim);
 int simple_shell2(char *str2, char *str, char **envp)
 {
 	char *argument[] = {"sh"}, *token;/**env[] = {"der", NULL};*/
-	int count, i;/*char c[150] = "PATH=";*/
+	int count, i, nbchar = 0;/*char c[150] = "PATH=";*/
 
 	argument[1] = "-c";
 	if (strcmp(str, "env") != 0)
@@ -114,8 +114,9 @@ int simple_shell2(char *str2, char *str, char **envp)
 		for (i = 0; envp[i] != NULL; i++)
 		{token = malloc(sizeof(*token) * 20);
 			_strtok(token, envp[i], '=');
-			if (strcmp(token, "LS_COLORS") != 0)
+			if (strcmp(token, "LS_COLORS") != 0 && nbchar <= 266)
 			{
+				nbchar += (int)strlen(envp[i]);
 				write(1, envp[i], (int)strlen(envp[i]));
 				write(1, "\n", 1);
 				free(token);
