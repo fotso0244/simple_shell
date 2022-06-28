@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 		}
 		else
 			simple_shell2(argv[0], argv[1]);
-	printf("%d\n", status);
-	return (0);
+	if (status != 0)
+		status = 2;
+	return (status);
 }
