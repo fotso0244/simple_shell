@@ -152,7 +152,8 @@ void _strtok(char *token, char *str, char delim)
 	}
 	if (i == 0)
 	{
-		free(token);
+		if (token != NULL)
+			free(token);
 		token = NULL;
 	}
 	else
