@@ -27,7 +27,7 @@ int main(int argc, char **argv, char *envp[])
 	if (status == 6)
 	{
 		status = 0;
-		write(2, "", 1);
+		perror("");
 	}
 	return (status);
 }
