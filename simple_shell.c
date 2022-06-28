@@ -116,12 +116,7 @@ int simple_shell2(char *str2, char *str, char **envp)
 			_strtok(token, envp[i], '=');
 			if (strcmp(token, "LS_COLORS") != 0)
 			{
-				if (write(1, envp[i], (int)strlen(envp[i])) == -1)
-				{
-					fflush(stderr);
-					exit(0);
-				}
-				write(1, "\n", 1);
+				printf("%s\n", envp[i]);
 				free(token);
 			}
 		}
