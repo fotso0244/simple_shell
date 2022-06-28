@@ -104,9 +104,10 @@ void _strtok(char *token, char *str, char delim);
 int simple_shell2(char *str2, char *str, char **envp)
 {
 	char *argument[] = {"sh"}, *token;/**env[] = {"der", NULL};*/
-	int count, i;/*char c[150] = "PATH=";*/
+	int count, i, cmp = 0;/*char c[150] = "PATH=";*/
 
-	if (strcmp(str, "env") != 0)
+	cmp = strcmp(str, "env");
+	if (cmp != 0)
 	{
 		argument[1] = "-c";
 		argument[2] = str;
