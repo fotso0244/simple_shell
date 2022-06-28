@@ -213,7 +213,7 @@ int simple_shell3(char *str, int status, char *envp[])
 {
 	char *str2 = NULL, *token;
 	char d;
-	int c = 1, i = 0, j = 0;
+	int c = 1, i = 0, j = 0, k;
 	pid_t proc;
 
 	str2 = malloc(sizeof(*str2) * 50);
@@ -238,6 +238,8 @@ int simple_shell3(char *str, int status, char *envp[])
 	while (str2[i] != '\0')
 	{
 		token = malloc(sizeof(*token) * nbchar(str2));
+		for (k = 0; k <= nbchar(str2) - 1; k++)
+			token[k] = '\0';
 		while (str2[i] != '\n')
 		{
 			if (str2[i] != ' ' || str2[i + 1] != ' ')
