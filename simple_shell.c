@@ -129,6 +129,7 @@ int simple_shell2(char *str2, char *str, char **envp)
 	env[0] = c;
 	env[1] = NULL;*/
 	execve("/bin/sh", argument, 0);
+	fflush(stdout);
 	count = nbchar(str2);
 	write(2, str2, count);
 	write(2, ": No such file or directory\n", 28);
