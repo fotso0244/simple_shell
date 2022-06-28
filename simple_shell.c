@@ -169,7 +169,7 @@ int If_cmd_exist(char *cmd, char *str2)
 {
 	char *path = getenv("PATH"), *token1, *token3, *token2;
 	struct stat stats;
-	int res = 0;
+	int res = 0, k;
 
 	if (path == NULL)
 	{
@@ -181,6 +181,10 @@ int If_cmd_exist(char *cmd, char *str2)
 	token3 = path;
 	token2 = malloc(sizeof(*token2) * 20);
 	token1 = malloc(sizeof(*token1) * 10);
+	for (k = 0; k <= 19; k++)
+		token2[k] = '\0';
+	for (k = 0; k <= 9; k++)
+		token1[k] = '\0';
 	if (token2 == NULL || token3 == NULL || cmd == NULL || token1 == NULL)
 	{
 		free(cmd);
