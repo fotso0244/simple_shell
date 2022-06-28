@@ -205,7 +205,7 @@ int If_cmd_exist(char *cmd)
 		else
 		{
 			res = 1;
-			if (token2 != NULL && token1 = NULL)
+			if (token2 != NULL && token1 != NULL)
 			{
 				free(token2);
 				free(token1);
