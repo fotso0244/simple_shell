@@ -225,7 +225,7 @@ void simple_shell3(char *str)
 		if (j != 0)
 		{
 			token[j] = '\0';
-			if ((token[0] == '.' && token[1] == '/') || (token[0] == '.' && token[1] == '.' && token[2] == '/') || token[0] == '/')
+			if ((token[0] == '.' && token[1] == '/') || (token[0] == '.' && token[1] == '.' && token[2] == '/') || token[0] == '/' || strcmp(token, "exit") == 0)
 				goto process;
 			if (If_cmd_exist(token) == 1)
 			{
