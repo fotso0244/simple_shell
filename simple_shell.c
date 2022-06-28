@@ -118,6 +118,7 @@ int simple_shell2(char *str2, char *str, char **envp)
 			{
 				write(1, envp[i], (int)strlen(envp[i]));
 				write(1, "\n", 1);
+				free(token);
 			}
 		}
 		return (0);
