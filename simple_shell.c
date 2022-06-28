@@ -190,19 +190,26 @@ int If_cmd_exist(char *cmd)
 			token3 += (nbchar(token2) - nbchar(token1));
 			if (token3[0] == 'P')
 			{
-				free(token1);
-				free(token2);
+				if (token2 != NULL && token1 != NULL)
+				{
+					free(token1);
+					free(token2);
+				}
 				return (0);
 			}
-			free(token2);
+			if (token2 != NULL)
+				free(token2);
 			token2= malloc(sizeof(*token2) * 20);
 			_strtok(token2, token3, ':');
 		}
 		else
 		{
 			res = 1;
-			free(token2);
-			free(token1);
+			if (token2 != NULL && token1 = NULL)
+			{
+				free(token2);
+				free(token1);
+			}
 			return (1);
 		}
 	}
