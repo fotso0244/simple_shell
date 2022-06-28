@@ -191,7 +191,7 @@ int If_cmd_exist(char *cmd, char *str2)
 	_strtok(token1, cmd, ' ');
 	while(token2 != NULL)
 	{
-		strcat(token2, "/");
+		strcat(token2, "/\0");
 		strcat(token2, token1);
 		if (stat(token2, &stats) == -1)
 		{
