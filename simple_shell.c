@@ -286,6 +286,6 @@ process:
 			i++;
 		}
 	}
-	free(str2);
+	free(str2);printf("status = %d\n", status);
 	return (status);
 }
