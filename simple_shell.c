@@ -104,7 +104,7 @@ void _strtok(char *token, char *str, char delim);
 int simple_shell2(char *str2, char *str, char **envp)
 {
 	char *cpy, *argument[] = {"sh"}, *token;/**env[] = {"der", NULL};*/
-	int count, ;/*char c[150] = "PATH=";*/
+	int count, i;/*char c[150] = "PATH=";*/
 
 	cpy = malloc(sizeof(*cpy) * 20);
 	strcpy(cpy, str);
