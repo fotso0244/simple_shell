@@ -118,7 +118,7 @@ int simple_shell2(char *str2, char *str, char **envp)
 			{
 				if (write(1, envp[i], (int)strlen(envp[i])) == -1)
 				{
-					write(2, "", 1);
+					fflush(stderr);
 					exit(0);
 				}
 				write(1, "\n", 1);
