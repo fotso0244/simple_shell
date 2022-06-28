@@ -176,7 +176,7 @@ int If_cmd_exist(char *cmd)
 	token3 = path;
 	token2 = malloc(sizeof(*token2) * 20);
 	token1 = malloc(sizeof(*token1) * 10);
-	if (token2 == NULL || token1 == NULL)
+	if (token2 == NULL || token3 == NULL || token1 == NULL)
 		exit(0);
 	_strtok(token2, token3, ':');
 	_strtok(token1, cmd, ' ');
