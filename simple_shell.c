@@ -100,9 +100,10 @@ void simple_shell(char *str)
  *
  * Return: 0
  */
+void _strtok(char *token, char *str, char delim);
 int simple_shell2(char *str2, char *str, char **envp)
 {
-	char *argument[] = {"sh"};/**env[] = {"der", NULL};*/
+	char *argument[] = {"sh"}, *token;/**env[] = {"der", NULL};*/
 	int count, i;/*char c[150] = "PATH=";*/
 
 	argument[1] = "-c";
@@ -111,9 +112,13 @@ int simple_shell2(char *str2, char *str, char **envp)
 	else
 	{
 		for (i = 0; envp[i] != NULL; i++)
-		{
-			write(1, envp[i], (int)strlen(envp[i]));
-			write(1, "\n", 1);
+		{token = malloc(sizeof(*token) * 20);
+			_strtok(token, envp[i], '=');
+			if (strcmp(token, "LS_COLORS") != 0)
+			{
+				write(1, envp[i], (int)strlen(envp[i]));
+				write(1, "\n", 1);
+			}
 		}
 		return (0);
 	}
