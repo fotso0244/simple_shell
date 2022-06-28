@@ -107,6 +107,9 @@ int simple_shell2(char *str2, char *str, char **envp)
 	int count, i;/*char c[150] = "PATH=";*/
 
 	cpy = malloc(sizeof(*cpy) * 20);
+	for (i = 0; i <= 19; i++)
+		cpy[i] = '\0';
+	i = 0;
 	strcpy(cpy, str);
 	if (strcmp(cpy, "env") != 0)
 	{
