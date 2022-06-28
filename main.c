@@ -24,10 +24,9 @@ int main(int argc, char **argv, char *envp[])
 			simple_shell2(argv[0], argv[1], envp);
 	if (status == 512)
 		status = 2;
-	if (status == 6)
+	if (status == 6 || status == 134)
 	{
 		status = 0;
-		close(2);
 	}
 	return (status);
 }
