@@ -22,7 +22,12 @@ int main(int argc, char **argv, char *envp[])
 		}
 		else
 			simple_shell2(argv[0], argv[1], envp);
-	if (status != 0)
+	if (status == 512)
 		status = 2;
+	if (status == 6)
+	{
+		status = 0;
+		write(2, "", 1);
+	}
 	return (status);
 }
