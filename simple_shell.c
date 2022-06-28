@@ -97,8 +97,10 @@ void simple_shell(char *str)
  * simple_shell2 - a custom shell
  * @str: a string
  * @str2: name of binary file
+ *
+ * Return: 0
  */
-void simple_shell2(char *str2, char *str)
+int simple_shell2(char *str2, char *str)
 {
 	char *argument[] = {"sh"};/**env[] = {"der", NULL};*/
 	int count;/*char c[150] = "PATH=";*/
@@ -114,6 +116,7 @@ void simple_shell2(char *str2, char *str)
 	count = nbchar(str2);
 	write(2, str2, count);
 	write(2, ": No such file or directory\n", 28);
+	return (0);
 }
 void _strtok(char *token, char *str, char delim)
 {
@@ -181,8 +184,10 @@ int If_cmd_exist(char *cmd)
 /**
  * simple_shell3 - a non-interactive shell
  * @str: name of program
+ *
+ * Return: an int
  */
-void simple_shell3(char *str)
+int simple_shell3(char *str, int status)
 {
 	char *str2 = NULL, *token;
 	char d;
@@ -239,11 +244,13 @@ process:
 				if (proc == 0)
 				{
 					simple_shell2(str, token);
-					exit(1);
 				}
 				else
 				{
-					wait(NULL);
+					if (strcmp(token, "exit") != 0)
+						waitpid(proc, &status, 0);
+					else
+						wait(NULL);
 					free(token);
 					i++;
 					j = 0;
@@ -265,4 +272,5 @@ process:
 		}
 	}
 	free(str2);
+	return (status);
 }
