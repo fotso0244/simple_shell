@@ -175,6 +175,7 @@ int If_cmd_exist(char *cmd, char *str2)
 	{
 		free(cmd);
 		free(str2);
+		free(token);
 		exit(0);
 	}
 	path[nbchar(path)] = '\0';
@@ -184,6 +185,7 @@ int If_cmd_exist(char *cmd, char *str2)
 	if (token2 == NULL || token3 == NULL || cmd == NULL || token1 == NULL)
 	{
 		free(cmd);
+		free(token);
 		free(str2);
 		exit(0);
 	}
