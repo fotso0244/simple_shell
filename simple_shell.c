@@ -136,7 +136,7 @@ int simple_shell2(char *str2, char *str, char **envp)
 				fflush(stdout);
 				free(token);
 			}
-		}
+		}free(str);
 	}
 	free(cpy);
 	return (0);
