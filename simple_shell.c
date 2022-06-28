@@ -165,7 +165,7 @@ void _strtok(char *token, char *str, char delim)
  *
  * Return: 1 if command exist, otherwise 0
  */
-int If_cmd_exist(char *cmd)
+int If_cmd_exist(char *cmd, char *str2)
 {
 	char *path = getenv("PATH"), *token1, *token3, *token2;
 	struct stat stats;
@@ -174,6 +174,7 @@ int If_cmd_exist(char *cmd)
 	if (path == NULL)
 	{
 		free(cmd);
+		free(str2);
 		exit(0);
 	}
 	path[nbchar(path)] = '\0';
@@ -183,6 +184,7 @@ int If_cmd_exist(char *cmd)
 	if (token2 == NULL || token3 == NULL || cmd == NULL || token1 == NULL)
 	{
 		free(cmd);
+		free(str2);
 		exit(0);
 	}
 	_strtok(token2, token3, ':');
@@ -275,7 +277,7 @@ int simple_shell3(char *str, int status, char *envp[])
 			token[j] = '\0';
 			if ((token[0] == '.' && token[1] == '/') || (strcmp(token, "env") == 0) || (token[0] == '.' && token[1] == '.' && token[2] == '/') || token[0] == '/' || strcmp(token, "exit") == 0)
 				goto process;
-			if (If_cmd_exist(token) == 1)
+			if (If_cmd_exist(token, str2) == 1)
 			{
 process:
 				proc = fork();
