@@ -138,6 +138,7 @@ int simple_shell2(char *str2, char *str, char **envp)
 			}
 		}
 	}
+	free(cpy);
 	return (0);
 }
 void _strtok(char *token, char *str, char delim)
