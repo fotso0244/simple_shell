@@ -9,7 +9,7 @@
  *
  * Return: always 0
  */
-int main(int argc, char **argv)
+int main(int argc, char **argv, char *envp[])
 {
 	int status = 0;
 
@@ -18,10 +18,10 @@ int main(int argc, char **argv)
 	else
 		if (!isatty(0))
 		{
-			status = simple_shell3(argv[0], status);
+			status = simple_shell3(argv[0], status, envp);
 		}
 		else
-			simple_shell2(argv[0], argv[1]);
+			simple_shell2(argv[0], argv[1], envp);
 	if (status != 0)
 		status = 2;
 	return (status);

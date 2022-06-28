@@ -100,13 +100,23 @@ void simple_shell(char *str)
  *
  * Return: 0
  */
-int simple_shell2(char *str2, char *str)
+int simple_shell2(char *str2, char *str, char **envp)
 {
 	char *argument[] = {"sh"};/**env[] = {"der", NULL};*/
-	int count;/*char c[150] = "PATH=";*/
+	int count, i;/*char c[150] = "PATH=";*/
 
 	argument[1] = "-c";
-	argument[2] = str;
+	if (strcmp(str, "env") != 0)
+		argument[2] = str;
+	else
+	{
+		for (i = 0; envp[i] != NULL; i++)
+		{
+			write(1, envp[i], (int)strlen(envp[i]));
+			write(1, "\n", 1);
+		}
+		return (0);
+	}
 	argument[3] = NULL;
 	/*env[0] = getenv("PATH");
 	strcat(c, env[0]);
@@ -187,7 +197,7 @@ int If_cmd_exist(char *cmd)
  *
  * Return: an int
  */
-int simple_shell3(char *str, int status)
+int simple_shell3(char *str, int status, char *envp[])
 {
 	char *str2 = NULL, *token;
 	char d;
@@ -230,7 +240,7 @@ int simple_shell3(char *str, int status)
 		if (j != 0)
 		{
 			token[j] = '\0';
-			if ((token[0] == '.' && token[1] == '/') || (token[0] == '.' && token[1] == '.' && token[2] == '/') || token[0] == '/' || strcmp(token, "exit") == 0)
+			if ((token[0] == '.' && token[1] == '/') || (strcmp(token, "env") == 0) || (token[0] == '.' && token[1] == '.' && token[2] == '/') || token[0] == '/' || strcmp(token, "exit") == 0)
 				goto process;
 			if (If_cmd_exist(token) == 1)
 			{
@@ -243,7 +253,7 @@ process:
 				}
 				if (proc == 0)
 				{
-					simple_shell2(str, token);
+					simple_shell2(str, token, envp);
 				}
 				else
 				{
