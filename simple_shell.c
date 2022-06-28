@@ -117,6 +117,7 @@ int simple_shell2(char *str2, char *str, char **envp)
 			if (strcmp(token, "LS_COLORS") != 0)
 			{
 				printf("%s\n", envp[i]);
+				fflush(stdout);
 				free(token);
 			}
 		}
