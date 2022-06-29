@@ -29,6 +29,6 @@ int main(int argc, char **argv)
 	if (status == 6 || status == 134)
 	{
 		return (0);
-	}printf("status = %d\n", status);
+	}
 	return (0);
 }
